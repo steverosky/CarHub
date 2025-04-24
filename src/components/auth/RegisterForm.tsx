@@ -37,9 +37,9 @@ const RegisterForm: React.FC = () => {
       setError('');
       setLoading(true);
       await register(email, password, name);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Registration error:', err);
-      setError(err.message || 'Failed to create an account');
+      setError(err instanceof Error ? err.message : 'Failed to create an account');
     } finally {
       setLoading(false);
     }

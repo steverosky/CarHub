@@ -30,9 +30,9 @@ const LoginForm: React.FC = () => {
       setError('');
       setLoading(true);
       await login(email, password);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Login error:', err);
-      setError(err.message || 'Failed to log in. Please check your credentials.');
+      setError(err instanceof Error ? err.message : 'Failed to log in. Please check your credentials.');
     } finally {
       setLoading(false);
     }

@@ -17,7 +17,6 @@ import MyBookingsPage from './pages/MyBookingsPage';
 import BookingConfirmPage from './pages/BookingConfirmPage';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import AboutPage from './pages/AboutPage';
-import BookingConfirmationPage from './pages/BookingConfirmationPage';
 import FavoritesPage from './pages/FavoritesPage';
 
 // CSS
