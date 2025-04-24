@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Vehicle, InsuranceOption } from '../types';
-import { FiCalendar, FiUsers, FiMapPin, FiStar, FiCheck, FiTool, FiDroplet, FiSettings } from 'react-icons/fi';
+import { FiUsers, FiMapPin, FiStar, FiCheck, FiTool, FiDroplet, FiSettings } from 'react-icons/fi';
 import ImageGallery from '../components/cars/ImageGallery';
 import ReviewForm from '../components/cars/ReviewForm';
 import DatePicker from 'react-datepicker';
@@ -18,7 +18,7 @@ const CarDetailsPage: React.FC = () => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [selectedInsurance, setSelectedInsurance] = useState<InsuranceOption | null>(null);
 
-  const fetchCar = async () => {
+  const fetchCar = useCallback(async () => {
     if (!id) return;
     try {
       const docRef = doc(db, 'vehicles', id);
@@ -31,11 +31,11 @@ const CarDetailsPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchCar();
-  }, [id]);
+  }, [fetchCar]);
 
   if (loading) {
     return (
