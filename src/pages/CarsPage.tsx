@@ -6,7 +6,6 @@ import { Vehicle } from '../types';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { FiSearch } from 'react-icons/fi';
 
 const CarsPage: React.FC = () => {
   const [cars, setCars] = useState<Vehicle[]>([]);
@@ -20,7 +19,7 @@ const CarsPage: React.FC = () => {
   });
   const [sortBy, setSortBy] = useState<SortOption>('price-low');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const { favorites, isFavorite } = useFavorites();
+  const { isFavorite } = useFavorites();
 
   // Fetch cars from Firestore
   useEffect(() => {
@@ -90,7 +89,7 @@ const CarsPage: React.FC = () => {
       result = result.filter(car => car.transmission === filters.transmission);
     }
     if (filters.seats) {
-      result = result.filter(car => (car.seats || 0) >= filters.seats!);
+      result = result.filter(car => (car.seats ?? 0) >= (filters.seats ?? 0));
     }
     if (filters.fuelType) {
       result = result.filter(car => car.fuelType === filters.fuelType);
