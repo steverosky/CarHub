@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { FiMail, FiLock, FiAlertCircle } from 'react-icons/fi';
 
 const LoginForm: React.FC = () => {
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -16,6 +16,13 @@ const LoginForm: React.FC = () => {
   // Get redirect path from location state, or default to home
   const from = location.state?.from || '/';
   
+  // Navigate when user is authenticated
+  useEffect(() => {
+    if (currentUser) {
+      navigate(from);
+    }
+  }, [currentUser, navigate, from]);
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -23,7 +30,6 @@ const LoginForm: React.FC = () => {
       setError('');
       setLoading(true);
       await login(email, password);
-      navigate(from);
     } catch (err: any) {
       console.error('Login error:', err);
       setError(err.message || 'Failed to log in. Please check your credentials.');

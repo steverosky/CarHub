@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { FiUser, FiMail, FiLock, FiPhone, FiAlertCircle } from 'react-icons/fi';
 
 const RegisterForm: React.FC = () => {
-  const { register } = useAuth();
+  const { register, currentUser } = useAuth();
   const navigate = useNavigate();
   
   const [name, setName] = useState('');
@@ -14,6 +14,13 @@ const RegisterForm: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  
+  // Navigate when user is authenticated
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/');
+    }
+  }, [currentUser, navigate]);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +37,6 @@ const RegisterForm: React.FC = () => {
       setError('');
       setLoading(true);
       await register(email, password, name);
-      navigate('/');
     } catch (err: any) {
       console.error('Registration error:', err);
       setError(err.message || 'Failed to create an account');

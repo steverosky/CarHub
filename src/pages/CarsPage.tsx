@@ -1,46 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { collection, query, getDocs, orderBy } from 'firebase/firestore';
-import { db } from '../firebase/config';
-import { Vehicle } from '../types';
+import React, { useState, useMemo, useEffect } from 'react';
 import CarCard from '../components/cars/CarCard';
 import CarFilter, { FilterValues } from '../components/cars/CarFilter';
+import SortSelect, { SortOption } from '../components/cars/SortSelect';
+import { Vehicle } from '../types';
+import { useFavorites } from '../contexts/FavoritesContext';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/config';
 import { FiSearch } from 'react-icons/fi';
 
 const CarsPage: React.FC = () => {
   const [cars, setCars] = useState<Vehicle[]>([]);
-  const [filteredCars, setFilteredCars] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [locations, setLocations] = useState<string[]>([]);
-  const [carTypes, setCarTypes] = useState<string[]>([]);
+  const [filters, setFilters] = useState<FilterValues>({
+    search: '',
+    type: '',
+    location: '',
+    minPrice: 0,
+    maxPrice: 1000,
+  });
+  const [sortBy, setSortBy] = useState<SortOption>('price-low');
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const { favorites, isFavorite } = useFavorites();
 
   // Fetch cars from Firestore
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const carsQuery = query(
-          collection(db, 'vehicles'),
-          orderBy('make', 'asc')
-        );
-        
-        const querySnapshot = await getDocs(carsQuery);
-        const carsList: Vehicle[] = [];
-        const uniqueLocations = new Set<string>();
-        const uniqueTypes = new Set<string>();
-        
-        querySnapshot.forEach((doc) => {
-          const car = { id: doc.id, ...doc.data() } as Vehicle;
-          carsList.push(car);
-          
-          // Collect unique locations and types for filters
-          if (car.location) uniqueLocations.add(car.location);
-          if (car.type) uniqueTypes.add(car.type);
-        });
-        
-        setCars(carsList);
-        setFilteredCars(carsList);
-        setLocations(Array.from(uniqueLocations));
-        setCarTypes(Array.from(uniqueTypes));
+        const carsRef = collection(db, 'vehicles');
+        const snapshot = await getDocs(carsRef);
+        const carsData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Vehicle[];
+        setCars(carsData);
       } catch (error) {
         console.error('Error fetching cars:', error);
       } finally {
@@ -51,114 +43,134 @@ const CarsPage: React.FC = () => {
     fetchCars();
   }, []);
 
-  // Handle filter changes
-  const handleFilterChange = (filters: FilterValues) => {
-    let filtered = [...cars];
-    
-    // Filter by type
+  // Extract unique locations and car types for filters
+  const locations = useMemo(() => 
+    Array.from(new Set(cars.map(car => car.location))).sort(),
+    [cars]
+  );
+
+  const carTypes = useMemo(() => 
+    Array.from(new Set(cars.map(car => car.type))).sort(),
+    [cars]
+  );
+
+  // Filter and sort cars
+  const filteredCars = useMemo(() => {
+    let result = [...cars];
+
+    // Apply favorites filter
+    if (showFavoritesOnly) {
+      result = result.filter(car => isFavorite(car.id));
+    }
+
+    // Apply search filter
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
+      result = result.filter(car =>
+        car.make.toLowerCase().includes(searchLower) ||
+        car.model.toLowerCase().includes(searchLower) ||
+        car.type.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Apply other filters
     if (filters.type) {
-      filtered = filtered.filter(car => car.type === filters.type);
+      result = result.filter(car => car.type === filters.type);
     }
-    
-    // Filter by location
     if (filters.location) {
-      filtered = filtered.filter(car => car.location === filters.location);
+      result = result.filter(car => car.location === filters.location);
     }
-    
-    // Filter by price range
-    filtered = filtered.filter(
-      car => car.ratePerDay >= filters.minPrice && car.ratePerDay <= filters.maxPrice
-    );
-    
-    // Apply search query filter if present
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        car => 
-          car.make.toLowerCase().includes(query) || 
-          car.model.toLowerCase().includes(query)
-      );
+    if (filters.minPrice) {
+      result = result.filter(car => car.ratePerDay >= filters.minPrice);
     }
-    
-    setFilteredCars(filtered);
+    if (filters.maxPrice) {
+      result = result.filter(car => car.ratePerDay <= filters.maxPrice);
+    }
+    if (filters.transmission) {
+      result = result.filter(car => car.transmission === filters.transmission);
+    }
+    if (filters.seats) {
+      result = result.filter(car => (car.seats || 0) >= filters.seats!);
+    }
+    if (filters.fuelType) {
+      result = result.filter(car => car.fuelType === filters.fuelType);
+    }
+
+    // Apply sorting
+    result.sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low':
+          return a.ratePerDay - b.ratePerDay;
+        case 'price-high':
+          return b.ratePerDay - a.ratePerDay;
+        case 'rating':
+          return (b.rating || 0) - (a.rating || 0);
+        default:
+          return 0;
+      }
+    });
+
+    return result;
+  }, [cars, filters, sortBy, showFavoritesOnly, isFavorite]);
+
+  const handleFilterChange = (newFilters: FilterValues) => {
+    setFilters(newFilters);
   };
 
-  // Handle search input change
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    
-    let filtered = [...cars];
-    
-    if (query) {
-      const lowercaseQuery = query.toLowerCase();
-      filtered = filtered.filter(
-        car => 
-          car.make.toLowerCase().includes(lowercaseQuery) || 
-          car.model.toLowerCase().includes(lowercaseQuery)
-      );
-    }
-    
-    setFilteredCars(filtered);
+  const toggleFavorites = () => {
+    setShowFavoritesOnly(!showFavoritesOnly);
   };
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-secondary-900">Available Cars</h1>
-        <p className="mt-2 text-secondary-600">
-          Find and book the perfect vehicle for your journey
-        </p>
-      </div>
-      
-      {/* Search Input */}
-      <div className="mb-6">
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <FiSearch className="text-secondary-400" />
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <div key={index} className="bg-gray-200 h-64 rounded-lg"></div>
+            ))}
           </div>
-          <input
-            type="text"
-            className="input pl-10"
-            placeholder="Search by make or model..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
         </div>
       </div>
-      
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Filters */}
-        <div className="md:w-1/4">
-          <CarFilter 
+    );
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="md:flex md:items-center md:justify-between mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">Available Cars</h1>
+        <div className="mt-4 md:mt-0">
+          <SortSelect value={sortBy} onChange={setSortBy} />
+        </div>
+      </div>
+
+      <div className="lg:grid lg:grid-cols-4 lg:gap-8">
+        <div className="lg:col-span-1">
+          <CarFilter
             onFilterChange={handleFilterChange}
             locations={locations}
             carTypes={carTypes}
+            showFavoritesOnly={showFavoritesOnly}
+            onFavoritesToggle={toggleFavorites}
           />
         </div>
-        
-        {/* Car List */}
-        <div className="md:w-3/4">
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, index) => (
-                <div key={index} className="card p-4 animate-pulse">
-                  <div className="h-48 bg-secondary-100 rounded-md mb-4"></div>
-                  <div className="h-6 bg-secondary-100 rounded w-3/4 mb-2"></div>
-                  <div className="h-4 bg-secondary-100 rounded mb-2"></div>
-                  <div className="h-4 bg-secondary-100 rounded w-1/2"></div>
-                </div>
-              ))}
-            </div>
-          ) : filteredCars.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredCars.map((car: Vehicle) => (
-                <CarCard key={car.id} vehicle={car} />
-              ))}
+
+        <div className="mt-6 lg:mt-0 lg:col-span-3">
+          {filteredCars.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg shadow">
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No cars found
+              </h3>
+              <p className="text-gray-500">
+                Try adjusting your filters or search criteria
+              </p>
             </div>
           ) : (
-            <div className="card p-10 text-center">
-              <p className="text-secondary-500">No cars match your search criteria. Please try adjusting your filters.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {filteredCars.map((car) => (
+                <CarCard key={car.id} vehicle={car} />
+              ))}
             </div>
           )}
         </div>
@@ -167,4 +179,4 @@ const CarsPage: React.FC = () => {
   );
 };
 
-export default CarsPage; 
+export default CarsPage;

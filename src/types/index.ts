@@ -1,9 +1,12 @@
+import { User as FirebaseUser } from 'firebase/auth';
+
 export interface User {
   id: string;
   name: string;
   email: string;
   phone?: string;
   role: 'customer' | 'admin';
+  _firebaseUser?: FirebaseUser;
 }
 
 export interface Vehicle {
@@ -21,6 +24,36 @@ export interface Vehicle {
   seats?: number;
   transmission?: 'automatic' | 'manual';
   fuelType?: string;
+  // New fields
+  rating?: number;
+  reviews?: Review[];
+  colors?: string[];
+  mileage?: number;
+  insurance?: InsuranceOption[];
+  amenities?: string[];
+  specifications?: {
+    engine?: string;
+    horsepower?: number;
+    acceleration?: string;
+    fuelEfficiency?: string;
+  };
+}
+
+export interface Review {
+  id: string;
+  userId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
+export interface InsuranceOption {
+  id: string;
+  name: string;
+  description: string;
+  coverage: string[];
+  pricePerDay: number;
 }
 
 export interface Booking {
@@ -57,7 +90,17 @@ export interface Location {
 export interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
+  operationLoading: {
+    login: boolean;
+    register: boolean;
+    logout: boolean;
+    resetPassword: boolean;
+    updateProfile: boolean;
+  };
+  error: string | null;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name: string) => Promise<void>;
   logout: () => Promise<void>;
-} 
+  resetPassword: (email: string) => Promise<void>;
+  updateProfile: (displayName: string) => Promise<void>;
+}

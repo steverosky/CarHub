@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin } from 'react-icons/fi';
+import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -74,26 +74,29 @@ const Footer: React.FC = () => {
             
             <div className="mt-4 flex space-x-4">
               <a 
-                href="https://facebook.com" 
+                href="https://www.facebook.com/carhub" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-secondary-300 hover:text-primary-400 transition-colors duration-200"
+                aria-label="Visit our Facebook page"
               >
                 <FiFacebook className="h-6 w-6" />
               </a>
               <a 
-                href="https://twitter.com" 
+                href="https://www.twitter.com/carhub" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-secondary-300 hover:text-primary-400 transition-colors duration-200"
+                aria-label="Visit our Twitter page"
               >
                 <FiTwitter className="h-6 w-6" />
               </a>
               <a 
-                href="https://instagram.com" 
+                href="https://www.instagram.com/carhub" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-secondary-300 hover:text-primary-400 transition-colors duration-200"
+                aria-label="Visit our Instagram page"
               >
                 <FiInstagram className="h-6 w-6" />
               </a>
