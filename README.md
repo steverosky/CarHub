@@ -45,7 +45,7 @@ src/
 └── utils/          # Utility functions
 ```
 
-## Setup and Running
+## Setup and Installation
 
 ### Prerequisites
 - Node.js and npm installed
@@ -55,8 +55,8 @@ src/
 
 1. Clone the repository
    ```
-   git clone https://github.com/yourusername/car-rental.git
-   cd car-rental
+   git clone https://github.com/steverosky/CarHub.git
+   cd CarHub
    ```
 
 2. Install dependencies
@@ -64,10 +64,9 @@ src/
    npm install
    ```
 
-3. Create a Firebase project and update the environment variables
-   - Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/)
-   - Enable Authentication, Firestore, and Storage
-   - Update the `.env` file with your Firebase credentials
+3. Set up environment variables
+   - Create a `.env` file in the root directory
+   - Copy content from `.env.example` and update with your Firebase credentials
 
 4. Start the development server
    ```
@@ -87,7 +86,7 @@ src/
 4. Update security rules for Firestore and Storage
 5. Copy your Firebase configuration to the `.env` file
 
-## Deployment
+## Production Build
 
 To build the application for production:
 
