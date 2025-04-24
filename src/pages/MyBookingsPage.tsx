@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Booking } from '../types';
 import BookingCard from '../components/booking/BookingCard';
 import { FiAlertCircle } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 const MyBookingsPage: React.FC = () => {
   const { currentUser } = useAuth();
@@ -32,7 +33,14 @@ const MyBookingsPage: React.FC = () => {
         const bookingsList: Booking[] = [];
         
         querySnapshot.forEach((doc) => {
-          bookingsList.push({ id: doc.id, ...doc.data() } as Booking);
+          const data = doc.data();
+          bookingsList.push({ 
+            id: doc.id, 
+            ...data,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt)
+          } as Booking);
         });
         
         setBookings(bookingsList);
@@ -130,12 +138,12 @@ const MyBookingsPage: React.FC = () => {
         // No bookings state
         <div className="bg-white rounded-lg shadow-md p-8 text-center">
           <p className="text-gray-500 mb-4">You don't have any bookings yet.</p>
-          <a
-            href="/cars"
+          <Link
+            to="/cars"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
           >
             Browse Cars
-          </a>
+          </Link>
         </div>
       ) : (
         // Bookings list
