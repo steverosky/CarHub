@@ -1,46 +1,107 @@
-# Getting Started with Create React App
+# CarHub - Car Rental Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+CarHub is a web-based car rental management system built with React, TypeScript, Firebase, and Tailwind CSS. The application enables users to browse, rent, and manage vehicles online.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### Customer Features
+- Browse available cars with filtering by type, price, and location
+- View detailed car information
+- Book cars with pickup and drop-off details
+- Manage and view booking history
+- User authentication (register, login, logout)
 
-### `npm start`
+### Admin Features
+- Dashboard with key metrics
+- Manage vehicles (add, edit, delete)
+- View and manage bookings
+- User management
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech Stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Frontend**: React, TypeScript, React Router
+- **UI Components**: Tailwind CSS
+- **State Management**: React Context API
+- **Backend**: Firebase (Authentication, Firestore, Storage)
+- **Icons**: React Icons
 
-### `npm test`
+## Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+src/
+├── assets/         # Static assets
+├── components/     # Reusable components
+│   ├── admin/      # Admin related components
+│   ├── auth/       # Authentication components
+│   ├── booking/    # Booking related components
+│   ├── cars/       # Car related components
+│   └── layout/     # Layout components (Header, Footer)
+├── contexts/       # React Context providers
+├── firebase/       # Firebase configuration
+├── hooks/          # Custom React hooks
+├── pages/          # Application pages
+│   └── admin/      # Admin pages
+├── types/          # TypeScript type definitions
+└── utils/          # Utility functions
+```
 
-### `npm run build`
+## Setup and Running
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
+- Node.js and npm installed
+- Firebase account
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository
+   ```
+   git clone https://github.com/yourusername/car-rental.git
+   cd car-rental
+   ```
 
-### `npm run eject`
+2. Install dependencies
+   ```
+   npm install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Create a Firebase project and update the environment variables
+   - Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/)
+   - Enable Authentication, Firestore, and Storage
+   - Update the `.env` file with your Firebase credentials
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Start the development server
+   ```
+   npm start
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5. Open [http://localhost:3000](http://localhost:3000) to view it in the browser
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Firebase Setup
 
-## Learn More
+1. Create a Firebase project
+2. Enable Authentication with Email/Password provider
+3. Create a Firestore database with the following collections:
+   - `users`
+   - `vehicles`
+   - `bookings`
+4. Update security rules for Firestore and Storage
+5. Copy your Firebase configuration to the `.env` file
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To build the application for production:
+
+```
+npm run build
+```
+
+You can deploy the `build` folder to Firebase Hosting or any other hosting service.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Acknowledgements
+
+- Unsplash for car images
+- React and Firebase teams for their excellent documentation
