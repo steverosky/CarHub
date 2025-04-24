@@ -88,22 +88,22 @@ const AdminDashboardPage: React.FC = () => {
     return (
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-300 rounded w-1/4 mb-8"></div>
+          <div className="h-8 bg-secondary-100 rounded w-1/4 mb-8"></div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {[...Array(4)].map((_, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-6">
-                <div className="h-6 bg-gray-300 rounded w-1/2 mb-4"></div>
-                <div className="h-8 bg-gray-300 rounded w-1/3"></div>
+              <div key={index} className="card p-6">
+                <div className="h-6 bg-secondary-100 rounded w-1/2 mb-4"></div>
+                <div className="h-8 bg-secondary-100 rounded w-1/3"></div>
               </div>
             ))}
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
+          <div className="card p-6">
+            <div className="h-6 bg-secondary-100 rounded w-1/4 mb-4"></div>
             <div className="space-y-3">
               {[...Array(5)].map((_, index) => (
-                <div key={index} className="h-12 bg-gray-300 rounded"></div>
+                <div key={index} className="h-12 bg-secondary-100 rounded"></div>
               ))}
             </div>
           </div>
@@ -114,7 +114,7 @@ const AdminDashboardPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
+      <h1 className="text-3xl font-bold text-secondary-900 mb-8">Admin Dashboard</h1>
       
       {error && (
         <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md flex items-center">
@@ -125,62 +125,62 @@ const AdminDashboardPage: React.FC = () => {
       
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="card p-6">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-medium text-gray-500">Total Vehicles</h2>
-            <div className="p-2 bg-blue-100 rounded-md">
-              <FiTruck className="text-blue-600" />
+            <h2 className="text-sm font-medium text-secondary-500">Total Vehicles</h2>
+            <div className="p-2 bg-primary-100 rounded-md">
+              <FiTruck className="text-primary-600" />
             </div>
           </div>
           <div className="flex items-center">
-            <p className="text-3xl font-bold text-gray-800">{vehicleStats.total}</p>
+            <p className="text-3xl font-bold text-secondary-900">{vehicleStats.total}</p>
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="card p-6">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-medium text-gray-500">Available Vehicles</h2>
+            <h2 className="text-sm font-medium text-secondary-500">Available Vehicles</h2>
             <div className="p-2 bg-green-100 rounded-md">
               <FiTruck className="text-green-600" />
             </div>
           </div>
           <div className="flex items-center">
-            <p className="text-3xl font-bold text-gray-800">{vehicleStats.available}</p>
+            <p className="text-3xl font-bold text-secondary-900">{vehicleStats.available}</p>
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="card p-6">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-medium text-gray-500">Total Users</h2>
+            <h2 className="text-sm font-medium text-secondary-500">Total Users</h2>
             <div className="p-2 bg-purple-100 rounded-md">
               <FiUsers className="text-purple-600" />
             </div>
           </div>
           <div className="flex items-center">
-            <p className="text-3xl font-bold text-gray-800">{userCount}</p>
+            <p className="text-3xl font-bold text-secondary-900">{userCount}</p>
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="card p-6">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-medium text-gray-500">Total Bookings</h2>
+            <h2 className="text-sm font-medium text-secondary-500">Total Bookings</h2>
             <div className="p-2 bg-yellow-100 rounded-md">
               <FiCalendar className="text-yellow-600" />
             </div>
           </div>
           <div className="flex items-center">
-            <p className="text-3xl font-bold text-gray-800">{totalBookings}</p>
+            <p className="text-3xl font-bold text-secondary-900">{totalBookings}</p>
           </div>
         </div>
       </div>
       
       {/* Recent Bookings */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+      <div className="card p-6 mb-8">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold text-gray-800">Recent Bookings</h2>
+          <h2 className="text-lg font-semibold text-secondary-900">Recent Bookings</h2>
           <Link 
             to="/admin/bookings" 
-            className="text-sm text-blue-600 hover:text-blue-800"
+            className="text-sm text-primary-600 hover:text-primary-800 transition-colors duration-200"
           >
             View all
           </Link>
@@ -188,42 +188,42 @@ const AdminDashboardPage: React.FC = () => {
         
         {recentBookings.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-secondary-200">
+              <thead className="bg-secondary-50">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                     Booking ID
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                     User
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                     Vehicle
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                     Date
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                     Amount
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {recentBookings.map((booking) => (
+              <tbody className="bg-white divide-y divide-secondary-200">
+                {recentBookings.map((booking: Booking) => (
                   <tr key={booking.id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                       {booking.id.slice(0, 8)}...
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-900">
                       {booking.userId.slice(0, 8)}...
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-900">
                       {booking.vehicleId.slice(0, 8)}...
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                       {formatDate(booking.createdAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -232,12 +232,12 @@ const AdminDashboardPage: React.FC = () => {
                           ? 'bg-green-100 text-green-800' 
                           : booking.status === 'cancelled' 
                             ? 'bg-red-100 text-red-800' 
-                            : 'bg-blue-100 text-blue-800'
+                            : 'bg-primary-100 text-primary-800'
                       }`}>
                         {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-900">
                       ${booking.totalPrice}
                     </td>
                   </tr>
@@ -246,7 +246,7 @@ const AdminDashboardPage: React.FC = () => {
             </table>
           </div>
         ) : (
-          <p className="text-center text-gray-500">No recent bookings found.</p>
+          <p className="text-center text-secondary-500">No recent bookings found.</p>
         )}
       </div>
       
@@ -254,33 +254,33 @@ const AdminDashboardPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link 
           to="/admin/vehicles"
-          className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center hover:bg-blue-50 transition-colors"
+          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
         >
-          <FiTruck className="text-3xl text-blue-600 mb-2" />
-          <h3 className="text-lg font-semibold text-gray-800">Manage Vehicles</h3>
-          <p className="text-sm text-gray-500 text-center mt-1">
+          <FiTruck className="text-3xl text-primary-600 mb-2" />
+          <h3 className="text-lg font-semibold text-secondary-900">Manage Vehicles</h3>
+          <p className="text-sm text-secondary-500 text-center mt-1">
             Add, edit, or delete vehicles from your fleet
           </p>
         </Link>
         
         <Link 
           to="/admin/bookings"
-          className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center hover:bg-blue-50 transition-colors"
+          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
         >
-          <FiCalendar className="text-3xl text-blue-600 mb-2" />
-          <h3 className="text-lg font-semibold text-gray-800">Manage Bookings</h3>
-          <p className="text-sm text-gray-500 text-center mt-1">
+          <FiCalendar className="text-3xl text-primary-600 mb-2" />
+          <h3 className="text-lg font-semibold text-secondary-900">Manage Bookings</h3>
+          <p className="text-sm text-secondary-500 text-center mt-1">
             View and manage all customer bookings
           </p>
         </Link>
         
         <Link 
           to="/admin/users"
-          className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center hover:bg-blue-50 transition-colors"
+          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
         >
-          <FiUsers className="text-3xl text-blue-600 mb-2" />
-          <h3 className="text-lg font-semibold text-gray-800">Manage Users</h3>
-          <p className="text-sm text-gray-500 text-center mt-1">
+          <FiUsers className="text-3xl text-primary-600 mb-2" />
+          <h3 className="text-lg font-semibold text-secondary-900">Manage Users</h3>
+          <p className="text-sm text-secondary-500 text-center mt-1">
             View and manage registered users
           </p>
         </Link>

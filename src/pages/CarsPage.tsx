@@ -105,8 +105,8 @@ const CarsPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Available Cars</h1>
-        <p className="mt-2 text-gray-600">
+        <h1 className="text-3xl font-bold text-secondary-900">Available Cars</h1>
+        <p className="mt-2 text-secondary-600">
           Find and book the perfect vehicle for your journey
         </p>
       </div>
@@ -115,11 +115,11 @@ const CarsPage: React.FC = () => {
       <div className="mb-6">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <FiSearch className="text-gray-400" />
+            <FiSearch className="text-secondary-400" />
           </div>
           <input
             type="text"
-            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="input pl-10"
             placeholder="Search by make or model..."
             value={searchQuery}
             onChange={handleSearchChange}
@@ -142,23 +142,23 @@ const CarsPage: React.FC = () => {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md p-4 animate-pulse">
-                  <div className="h-48 bg-gray-300 rounded-md mb-4"></div>
-                  <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
-                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                <div key={index} className="card p-4 animate-pulse">
+                  <div className="h-48 bg-secondary-100 rounded-md mb-4"></div>
+                  <div className="h-6 bg-secondary-100 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-secondary-100 rounded mb-2"></div>
+                  <div className="h-4 bg-secondary-100 rounded w-1/2"></div>
                 </div>
               ))}
             </div>
           ) : filteredCars.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredCars.map((car) => (
+              {filteredCars.map((car: Vehicle) => (
                 <CarCard key={car.id} vehicle={car} />
               ))}
             </div>
           ) : (
-            <div className="text-center py-10 bg-white rounded-lg shadow-md">
-              <p className="text-gray-500">No cars match your search criteria. Please try adjusting your filters.</p>
+            <div className="card p-10 text-center">
+              <p className="text-secondary-500">No cars match your search criteria. Please try adjusting your filters.</p>
             </div>
           )}
         </div>
