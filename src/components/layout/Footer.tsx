@@ -73,16 +73,16 @@ const Footer: React.FC = () => {
             </address>
             
             <div className="mt-4 flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-blue-400">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-blue-400">
                 <FiFacebook className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-blue-400">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-blue-400">
                 <FiTwitter className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-blue-400">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-blue-400">
                 <FiInstagram className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-blue-400">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-blue-400">
                 <FiLinkedin className="h-6 w-6" />
               </a>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Vehicle } from '../types';
 import CarCard from '../components/cars/CarCard';

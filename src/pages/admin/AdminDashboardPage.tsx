@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db } from '../../firebase/config';
-import { Booking, Vehicle, User } from '../../types';
-import { FiUsers, FiTruck, FiCalendar, FiDollarSign, FiAlertCircle } from 'react-icons/fi';
+import { Booking, Vehicle } from '../../types';
+import { FiUsers, FiTruck, FiCalendar, FiAlertCircle } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const AdminDashboardPage: React.FC = () => {
