@@ -172,10 +172,46 @@ const AdminDashboardPage: React.FC = () => {
             <p className="text-3xl font-bold text-secondary-900">{totalBookings}</p>
           </div>
         </div>
+      </div>      
+      
+      {/* Quick Links */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <Link 
+          to="/admin/vehicles"
+          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
+        >
+          <FiTruck className="text-3xl text-primary-600 mb-2" />
+          <h3 className="text-lg font-semibold text-secondary-900">Manage Vehicles</h3>
+          <p className="text-sm text-secondary-500 text-center mt-1">
+            Add, edit, or delete vehicles from your fleet
+          </p>
+        </Link>
+        
+        <Link 
+          to="/admin/bookings"
+          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
+        >
+          <FiCalendar className="text-3xl text-primary-600 mb-2" />
+          <h3 className="text-lg font-semibold text-secondary-900">Manage Bookings</h3>
+          <p className="text-sm text-secondary-500 text-center mt-1">
+            View and manage all customer bookings
+          </p>
+        </Link>
+        
+        <Link 
+          to="/admin/users"
+          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
+        >
+          <FiUsers className="text-3xl text-primary-600 mb-2" />
+          <h3 className="text-lg font-semibold text-secondary-900">Manage Users</h3>
+          <p className="text-sm text-secondary-500 text-center mt-1">
+            View and manage registered users
+          </p>
+        </Link>
       </div>
       
       {/* Recent Bookings */}
-      <div className="card p-6 mb-8">
+      <div className="card p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg font-semibold text-secondary-900">Recent Bookings</h2>
           <Link 
@@ -184,8 +220,8 @@ const AdminDashboardPage: React.FC = () => {
           >
             View all
           </Link>
-        </div>
-        
+        </div>      
+
         {recentBookings.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-secondary-200">
@@ -248,42 +284,6 @@ const AdminDashboardPage: React.FC = () => {
         ) : (
           <p className="text-center text-secondary-500">No recent bookings found.</p>
         )}
-      </div>
-      
-      {/* Quick Links */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Link 
-          to="/admin/vehicles"
-          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
-        >
-          <FiTruck className="text-3xl text-primary-600 mb-2" />
-          <h3 className="text-lg font-semibold text-secondary-900">Manage Vehicles</h3>
-          <p className="text-sm text-secondary-500 text-center mt-1">
-            Add, edit, or delete vehicles from your fleet
-          </p>
-        </Link>
-        
-        <Link 
-          to="/admin/bookings"
-          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
-        >
-          <FiCalendar className="text-3xl text-primary-600 mb-2" />
-          <h3 className="text-lg font-semibold text-secondary-900">Manage Bookings</h3>
-          <p className="text-sm text-secondary-500 text-center mt-1">
-            View and manage all customer bookings
-          </p>
-        </Link>
-        
-        <Link 
-          to="/admin/users"
-          className="card p-6 flex flex-col items-center hover:bg-primary-50 transition-colors duration-200"
-        >
-          <FiUsers className="text-3xl text-primary-600 mb-2" />
-          <h3 className="text-lg font-semibold text-secondary-900">Manage Users</h3>
-          <p className="text-sm text-secondary-500 text-center mt-1">
-            View and manage registered users
-          </p>
-        </Link>
       </div>
     </div>
   );
