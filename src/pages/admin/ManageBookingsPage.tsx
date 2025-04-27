@@ -1,16 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
-import { Booking } from '../../types';
+import { Booking, User, Vehicle } from '../../types';
 import { FaCheck, FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+interface BookingWithDetails extends Booking {
+  user?: User;
+  vehicle?: Vehicle;
+}
+
 const ManageBookingsPage: React.FC = () => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [bookings, setBookings] = useState<BookingWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'approved' | 'cancelled' | 'completed'>('all');
+
+  const fetchBookingDetails = async (booking: Booking): Promise<BookingWithDetails> => {
+    const bookingWithDetails: BookingWithDetails = { ...booking };
+
+    try {
+      // Fetch user details
+      const userDoc = await getDoc(doc(db, 'users', booking.userId));
+      if (userDoc.exists()) {
+        bookingWithDetails.user = { id: userDoc.id, ...userDoc.data() } as User;
+      }
+
+      // Fetch vehicle details
+      const vehicleDoc = await getDoc(doc(db, 'vehicles', booking.vehicleId));
+      if (vehicleDoc.exists()) {
+        bookingWithDetails.vehicle = { id: vehicleDoc.id, ...vehicleDoc.data() } as Vehicle;
+      }
+    } catch (err) {
+      console.error('Error fetching booking details:', err);
+    }
+
+    return bookingWithDetails;
+  };
 
   const fetchBookings = async () => {
     try {
@@ -22,8 +49,13 @@ const ManageBookingsPage: React.FC = () => {
         ...doc.data()
       })) as Booking[];
 
+      // Fetch details for each booking
+      const bookingsWithDetails = await Promise.all(
+        fetchedBookings.map(booking => fetchBookingDetails(booking))
+      );
+
       // Sort bookings by date (most recent first)
-      const sortedBookings = fetchedBookings.sort((a, b) => 
+      const sortedBookings = bookingsWithDetails.sort((a, b) => 
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
       );
 
@@ -123,12 +155,16 @@ const ManageBookingsPage: React.FC = () => {
                     {booking.id.slice(0, 8)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{booking.customerName}</div>
-                    <div className="text-sm text-gray-500">{booking.customerEmail}</div>
+                    <div className="text-sm font-medium text-gray-900">{booking.user?.name || 'Unknown'}</div>
+                    <div className="text-sm text-gray-500">{booking.user?.email || 'No email'}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
-                      {booking.vehicleYear} {booking.vehicleMake} {booking.vehicleModel}
+                      {booking.vehicle ? (
+                        `${booking.vehicle.year} ${booking.vehicle.make} ${booking.vehicle.model}`
+                      ) : (
+                        'Vehicle not found'
+                      )}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
