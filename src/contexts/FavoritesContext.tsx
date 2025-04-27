@@ -27,7 +27,8 @@ export const useFavorites = () => {
 export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [favorites, setFavorites] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
+  const auth = useAuth();
+  const currentUser = auth?.currentUser;
 
   useEffect(() => {
     const fetchFavorites = async () => {
