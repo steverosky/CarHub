@@ -4,6 +4,7 @@ import { db } from '../../firebase/config';
 import { Booking } from '../../types';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 const ManageBookingsPage: React.FC = () => {
