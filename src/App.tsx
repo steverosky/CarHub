@@ -18,6 +18,7 @@ import BookingConfirmPage from './pages/BookingConfirmPage';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import AboutPage from './pages/AboutPage';
 import FavoritesPage from './pages/FavoritesPage';
+import ProfilePage from './pages/ProfilePage';
 
 // CSS
 import './App.css';
@@ -67,6 +68,14 @@ const App: React.FC = () => {
                 <Route path="/about" element={<AboutPage />} />
 
                 {/* Protected Routes */}
+                <Route 
+                  path="/profile" 
+                  element={
+                    <PrivateRoute>
+                      <ProfilePage />
+                    </PrivateRoute>
+                  } 
+                />
                 <Route 
                   path="/bookings" 
                   element={

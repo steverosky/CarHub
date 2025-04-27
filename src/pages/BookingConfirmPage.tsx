@@ -137,10 +137,10 @@ const BookingConfirmPage: React.FC = () => {
         <div className="mb-6 print:mb-4">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">Vehicle Details</h2>
           
-          <div className="flex items-center mb-4">
-            <div className="flex-shrink-0 w-20 h-20 bg-gray-200 rounded-md overflow-hidden mr-4 print:hidden">
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="w-full md:w-1/3 h-48 rounded-lg overflow-hidden">
               <img
-                src={vehicle.images[0]}
+                src={vehicle.images?.[0]}
                 alt={`${vehicle.make} ${vehicle.model}`}
                 className="w-full h-full object-cover"
               />

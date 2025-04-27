@@ -23,17 +23,22 @@ const MyBookingsPage: React.FC = () => {
       }
       
       try {
+        console.log('Current User:', currentUser); // Debug log
+        
         const bookingsQuery = query(
           collection(db, 'bookings'),
-          where('userId', '==', currentUser.id),
+          where('userId', '==', currentUser._firebaseUser?.uid),
           orderBy('createdAt', 'desc')
         );
         
         const querySnapshot = await getDocs(bookingsQuery);
+        console.log('Query Results:', querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // Debug log
+        
         const bookingsList: Booking[] = [];
         
         querySnapshot.forEach((doc) => {
           const data = doc.data();
+          console.log('Booking Data:', data); // Debug log
           bookingsList.push({ 
             id: doc.id, 
             ...data,
@@ -43,6 +48,7 @@ const MyBookingsPage: React.FC = () => {
           } as Booking);
         });
         
+        console.log('Processed Bookings:', bookingsList); // Debug log
         setBookings(bookingsList);
       } catch (error) {
         console.error('Error fetching bookings:', error);

@@ -19,6 +19,12 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+interface UpdateProfileData {
+  name: string;
+  phone?: string;
+  address?: string;
+}
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -116,7 +122,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
   
-  const updateProfile = async (displayName: string) => {
+  const updateProfile = async (data: UpdateProfileData) => {
     try {
       setOperationLoading(prev => ({ ...prev, updateProfile: true }));
       setError(null);
@@ -125,15 +131,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error('No authenticated user found');
       }
 
-      await firebaseUpdateProfile(currentUser._firebaseUser, { displayName });
+      await firebaseUpdateProfile(currentUser._firebaseUser, { displayName: data.name });
       
-      const updatedUser = {
-        ...currentUser,
-        name: displayName
+      const { _firebaseUser, ...userWithoutFirebaseUser } = currentUser;
+      const updatedUserData = {
+        ...userWithoutFirebaseUser,
+        name: data.name,
+        phone: data.phone,
+        address: data.address
       };
 
-      await setDoc(doc(db, 'users', currentUser.id), updatedUser, { merge: true });
-      setCurrentUser(updatedUser);
+      await setDoc(doc(db, 'users', currentUser.id), updatedUserData, { merge: true });
+
+      setCurrentUser({
+        ...updatedUserData,
+        _firebaseUser: currentUser._firebaseUser
+      });
     } catch (err) {
       handleError(err, 'profile update');
     } finally {

@@ -5,6 +5,7 @@ export interface User {
   name: string;
   email: string;
   phone?: string;
+  address?: string;
   role: 'customer' | 'admin';
   _firebaseUser?: FirebaseUser;
 }
@@ -60,13 +61,20 @@ export interface Booking {
   id: string;
   userId: string;
   vehicleId: string;
+  customerName: string;
+  customerEmail: string;
+  vehicleMake: string;
+  vehicleModel: string;
+  vehicleYear: number;
   startDate: string;
   endDate: string;
-  totalPrice: number;
-  status: 'booked' | 'cancelled' | 'completed';
   pickupLocation: string;
   dropoffLocation: string;
+  totalAmount: number;
+  totalPrice: number;
+  status: 'pending' | 'approved' | 'cancelled' | 'booked' | 'completed';
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface Payment {
@@ -87,6 +95,12 @@ export interface Location {
   zipCode: string;
 }
 
+export interface UpdateProfileData {
+  name: string;
+  phone?: string;
+  address?: string;
+}
+
 export interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
@@ -102,5 +116,5 @@ export interface AuthContextType {
   register: (email: string, password: string, name: string) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
-  updateProfile: (displayName: string) => Promise<void>;
+  updateProfile: (data: UpdateProfileData) => Promise<void>;
 }

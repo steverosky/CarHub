@@ -6,7 +6,7 @@ interface BookingDetails {
   car: {
     make: string;
     model: string;
-    imageUrl: string;
+    images: string[];
   };
   dates: {
     start: Date;
@@ -55,9 +55,9 @@ const BookingConfirmationPage: React.FC = () => {
           {/* Car Details */}
           <div className="flex items-center space-x-4">
             <img
-              src={bookingDetails.car.imageUrl}
+              src={bookingDetails.car.images?.[0]}
               alt={`${bookingDetails.car.make} ${bookingDetails.car.model}`}
-              className="w-24 h-24 object-cover rounded-lg"
+              className="w-full h-full object-cover"
             />
             <div>
               <h2 className="text-xl font-semibold text-secondary-900">

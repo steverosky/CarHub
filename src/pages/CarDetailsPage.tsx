@@ -95,18 +95,22 @@ const CarDetailsPage: React.FC = () => {
     }
 
     try {
+      console.log('Creating booking for user:', currentUser); // Debug log
+      
       // Create booking document
       const bookingRef = await addDoc(collection(db, 'bookings'), {
-        userId: currentUser.id,
+        userId: currentUser._firebaseUser?.uid,
         vehicleId: car.id,
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
         pickupLocation: car.location,
         dropoffLocation: car.location,
+        totalAmount: calculateTotalPrice(),
         totalPrice: calculateTotalPrice(),
         insurance: selectedInsurance,
-        status: 'booked',
-        createdAt: serverTimestamp()
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       });
 
       // Update vehicle status
