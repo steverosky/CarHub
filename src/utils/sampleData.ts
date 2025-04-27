@@ -52,7 +52,7 @@ export const initializeDatabase = async () => {
         features: ['Bluetooth', 'Backup Camera', 'Cruise Control', 'USB Ports', 'Apple CarPlay'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.5,
         reviews: [
           {
@@ -92,7 +92,7 @@ export const initializeDatabase = async () => {
         features: ['Navigation', 'Sunroof', 'Leather Seats', 'Heated Seats', 'Hands-free Liftgate'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.5,
         reviews: [
           {
@@ -132,7 +132,28 @@ export const initializeDatabase = async () => {
         features: ['Autopilot', 'Electric', 'Touch Screen', 'Premium Sound', 'Long Range Battery'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Electric'
+        fuelType: 'Electric',
+        rating: 4.7,
+        reviews: [
+          {
+            id: 'review3',
+            userId: 'user3',
+            userName: 'Emily R.',
+            rating: 5,
+            comment: 'A dream car that exceeds all expectations. Pure driving pleasure.',
+            date: '2025-03-20'
+          }
+        ],
+        colors: ['GT Silver', 'Guards Red', 'Racing Yellow'],
+        mileage: 5000,
+        insurance: insuranceOptions,
+        amenities: ['Heated Seats', 'Bose Surround Sound', 'Apple CarPlay'],
+        specifications: {
+          engine: '3.0L Twin-Turbo Flat-Six',
+          horsepower: 379,
+          acceleration: '0-60 mph in 4.0s',
+          fuelEfficiency: '18 city / 24 highway'
+        }
       },
       {
         id: 'car4',
@@ -151,7 +172,28 @@ export const initializeDatabase = async () => {
         features: ['Leather Interior', 'Panoramic Sunroof', 'Premium Sound System', 'Heated/Cooled Seats', 'Advanced Driver Assistance'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Gasoline'
+        fuelType: 'Petrol',
+        rating: 4.8,
+        reviews: [
+          {
+            id: 'review4',
+            userId: 'user4',
+            userName: 'Daniel T.',
+            rating: 5,
+            comment: 'Pure luxury and comfort. The perfect executive car.',
+            date: '2025-03-22'
+          }
+        ],
+        colors: ['Obsidian Black', 'Polar White', 'Selenite Gray'],
+        mileage: 18000,
+        insurance: insuranceOptions,
+        amenities: ['Heated/Cooled Seats', 'Premium Audio', 'Wireless Charging'],
+        specifications: {
+          engine: '2.0L Turbo',
+          horsepower: 255,
+          acceleration: '0-60 mph in 6.0s',
+          fuelEfficiency: '23 city / 31 highway'
+        }
       },
       {
         id: 'car5',
@@ -170,7 +212,7 @@ export const initializeDatabase = async () => {
         features: ['Bose Premium Audio', 'Performance Exhaust', 'Leather GT Seats', 'Head-Up Display', 'Track Mode'],
         seats: 2,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.8,
         reviews: [
           {
@@ -210,7 +252,7 @@ export const initializeDatabase = async () => {
         features: ['Convertible Top', 'SYNC Infotainment', 'Premium Audio', 'Backup Camera', 'Performance Package'],
         seats: 4,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.7,
         reviews: [
           {
@@ -250,7 +292,7 @@ export const initializeDatabase = async () => {
         features: ['4x4', 'Removable Top', 'Off-Road Tires', 'Trail Rated', 'Touchscreen Display'],
         seats: 5,
         transmission: 'manual',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.6,
         reviews: [
           {
@@ -290,7 +332,7 @@ export const initializeDatabase = async () => {
         features: ['MBUX Infotainment', 'Leather Interior', 'Driver Assistance Package', 'Burmester Sound System', 'Ambient Lighting'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.8,
         reviews: [
           {
@@ -330,7 +372,7 @@ export const initializeDatabase = async () => {
         features: ['Sport Chrono Package', 'PDK Transmission', 'PASM Sport Suspension', 'Sport Exhaust System'],
         seats: 4,
         transmission: 'automatic',
-        fuelType: 'Premium Gasoline',
+        fuelType: 'Petrol',
         rating: 4.9,
         reviews: [
           {
@@ -370,7 +412,7 @@ export const initializeDatabase = async () => {
         features: ['Terrain Response 2', 'Air Suspension', 'Panoramic Roof', 'Meridian Sound System'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.7,
         reviews: [
           {
@@ -410,7 +452,7 @@ export const initializeDatabase = async () => {
         features: ['Virtual Cockpit', 'MMI Navigation', 'Leather Seats', 'Bose Sound System', 'Driver Assistance'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.6,
         reviews: [
           {
@@ -490,7 +532,7 @@ export const initializeDatabase = async () => {
         features: ['All-Wheel Drive', 'EyeSight Safety', 'X-Mode', 'Roof Rails', 'Driver Assistance'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.5,
         reviews: [
           {
@@ -530,7 +572,7 @@ export const initializeDatabase = async () => {
         features: ['Luxury Interior', 'Mark Levinson Audio', 'Panoramic Roof', 'Heated/Cooled Seats', 'Safety System+'],
         seats: 5,
         transmission: 'automatic',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.8,
         reviews: [
           {
@@ -570,7 +612,7 @@ export const initializeDatabase = async () => {
         features: ['Convertible Top', 'Bose Audio', 'Heated Seats', 'Blind Spot Monitoring', 'Rear Cross Traffic Alert'],
         seats: 2,
         transmission: 'manual',
-        fuelType: 'Gasoline',
+        fuelType: 'Petrol',
         rating: 4.9,
         reviews: [
           {

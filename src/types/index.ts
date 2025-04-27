@@ -24,7 +24,7 @@ export interface Vehicle {
   features?: string[];
   seats?: number;
   transmission?: 'automatic' | 'manual';
-  fuelType?: string;
+  fuelType?: 'Petrol' | 'Diesel' | 'Electric' | 'Hybrid';
   // New fields
   rating?: number;
   reviews?: Review[];
