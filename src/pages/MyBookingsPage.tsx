@@ -25,10 +25,10 @@ const MyBookingsPage: React.FC = () => {
       try {
         console.log('Current User:', currentUser); // Debug log
         
+        // Simplified query without orderBy to avoid index requirement
         const bookingsQuery = query(
           collection(db, 'bookings'),
-          where('userId', '==', currentUser._firebaseUser?.uid),
-          orderBy('createdAt', 'desc')
+          where('userId', '==', currentUser.id)
         );
         
         const querySnapshot = await getDocs(bookingsQuery);
@@ -46,6 +46,13 @@ const MyBookingsPage: React.FC = () => {
             endDate: data.endDate,
             createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt)
           } as Booking);
+        });
+
+        // Sort bookings by createdAt in memory
+        bookingsList.sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB.getTime() - dateA.getTime(); // descending order
         });
         
         console.log('Processed Bookings:', bookingsList); // Debug log
@@ -107,9 +114,27 @@ const MyBookingsPage: React.FC = () => {
     }
   };
 
-  // Filter bookings by status
-  const activeBookings = bookings.filter(booking => booking.status === 'booked');
-  const pastBookings = bookings.filter(booking => booking.status === 'completed' || booking.status === 'cancelled');
+  // Filter bookings by status and date
+  const activeBookings = bookings.filter(booking => {
+    const endDate = new Date(booking.endDate);
+    const now = new Date();
+    const isWithinDuration = endDate > now;
+    
+    // Include if:
+    // 1. Status is pending or approved, OR
+    // 2. Booking end date is in the future (still active duration)
+    return (
+      booking.status === 'pending' || 
+      booking.status === 'approved' ||
+      (isWithinDuration && booking.status !== 'cancelled' && booking.status !== 'completed')
+    );
+  });
+  
+  const pastBookings = bookings.filter(booking => {
+    const endDate = new Date(booking.endDate);
+    const now = new Date();
+    return endDate <= now || booking.status === 'cancelled' || booking.status === 'completed';
+  });
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">

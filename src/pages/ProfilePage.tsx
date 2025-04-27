@@ -35,18 +35,44 @@ const ProfilePage: React.FC = () => {
         );
         
         const querySnapshot = await getDocs(bookingsQuery);
-        const bookingsList = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          startDate: doc.data().startDate,
-          endDate: doc.data().endDate,
-          createdAt: doc.data().createdAt?.toDate?.() || new Date(doc.data().createdAt)
-        })) as Booking[];
+        const bookingsList = querySnapshot.docs.map(doc => {
+          const data = doc.data();
+          // Safely handle date conversions
+          const parseFirebaseDate = (dateField: any) => {
+            if (!dateField) return null;
+            // Handle Firestore Timestamp
+            if (dateField?.toDate instanceof Function) {
+              return dateField.toDate();
+            }
+            // Handle string dates
+            if (typeof dateField === 'string') {
+              return new Date(dateField);
+            }
+            // Handle timestamps
+            if (dateField?.seconds) {
+              return new Date(dateField.seconds * 1000);
+            }
+            return null;
+          };
+
+          return {
+            id: doc.id,
+            ...data,
+            startDate: parseFirebaseDate(data.startDate) || new Date(),
+            endDate: parseFirebaseDate(data.endDate) || new Date(),
+            createdAt: parseFirebaseDate(data.createdAt) || new Date()
+          };
+        }) as Booking[];
         
+        console.log('Fetched bookings:', bookingsList); // Debug log
         setBookings(bookingsList);
       } catch (error) {
         console.error('Error fetching bookings:', error);
-        setError('Failed to load your bookings');
+        if (error instanceof Error) {
+          setError(`Failed to load your bookings: ${error.message}`);
+        } else {
+          setError('Failed to load your bookings: Unknown error occurred');
+        }
       } finally {
         setLoading(false);
       }

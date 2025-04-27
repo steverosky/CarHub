@@ -22,6 +22,7 @@ import ManageUsersPage from './pages/admin/ManageUsersPage';
 import AboutPage from './pages/AboutPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
+import ContactPage from './pages/ContactPage';
 
 // CSS
 import './App.css';
@@ -62,6 +63,7 @@ const AppContent: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
           {/* Protected Routes */}
           <Route 

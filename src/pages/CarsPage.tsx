@@ -6,6 +6,7 @@ import { Vehicle } from '../types';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { useSearch } from '../hooks/useSearch';
 
 const CarsPage: React.FC = () => {
   const [cars, setCars] = useState<Vehicle[]>([]);
@@ -20,6 +21,15 @@ const CarsPage: React.FC = () => {
   const [sortBy, setSortBy] = useState<SortOption>('price-low');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const { isFavorite } = useFavorites();
+  const [searchQuery, setSearchQuery] = useSearch();
+
+  // Sync search query with filters
+  useEffect(() => {
+    setFilters(prev => ({
+      ...prev,
+      search: searchQuery
+    }));
+  }, [searchQuery]);
 
   // Fetch cars from Firestore
   useEffect(() => {
@@ -68,7 +78,10 @@ const CarsPage: React.FC = () => {
       result = result.filter(car =>
         car.make.toLowerCase().includes(searchLower) ||
         car.model.toLowerCase().includes(searchLower) ||
-        car.type.toLowerCase().includes(searchLower)
+        car.type.toLowerCase().includes(searchLower) ||
+        car.location.toLowerCase().includes(searchLower) ||
+        car.transmission?.toLowerCase().includes(searchLower) ||
+        car.fuelType?.toLowerCase().includes(searchLower)
       );
     }
 

@@ -47,8 +47,10 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, onCancel }) => {
   // Status badge color
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'booked':
+      case 'approved':
         return 'bg-green-100 text-green-800';
+      case 'booked':
+        return 'bg-yellow-100 text-yellow-800';
       case 'cancelled':
         return 'bg-red-100 text-red-800';
       case 'completed':
