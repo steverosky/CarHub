@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc, collection, addDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, collection, addDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Vehicle, InsuranceOption } from '../types';
 import { FiUsers, FiMapPin, FiStar, FiCheck, FiTool, FiDroplet, FiSettings } from 'react-icons/fi';
@@ -8,7 +8,6 @@ import ImageGallery from '../components/cars/ImageGallery';
 import ReviewForm from '../components/cars/ReviewForm';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import BookingForm from '../components/booking/BookingForm';
 import { useAuth } from '../contexts/AuthContext';
 
 const CarDetailsPage: React.FC = () => {

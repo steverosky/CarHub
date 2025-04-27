@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { collection, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { Booking, User, Vehicle } from '../../types';
@@ -39,7 +39,7 @@ const ManageBookingsPage: React.FC = () => {
     return bookingWithDetails;
   };
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     try {
       setLoading(true);
       const bookingsRef = collection(db, 'bookings');
@@ -72,11 +72,11 @@ const ManageBookingsPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [statusFilter]);
 
   useEffect(() => {
     fetchBookings();
-  }, [statusFilter]);
+  }, [fetchBookings]);
 
   const handleStatusChange = async (bookingId: string, newStatus: 'approved' | 'cancelled') => {
     try {

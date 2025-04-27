@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { User } from '../../types';
@@ -12,7 +12,7 @@ const ManageUsersPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [roleFilter, setRoleFilter] = useState<'all' | 'admin' | 'customer'>('all');
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const usersRef = collection(db, 'users');
@@ -40,11 +40,11 @@ const ManageUsersPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [roleFilter]);
 
   useEffect(() => {
     fetchUsers();
-  }, [roleFilter]);
+  }, [fetchUsers]);
 
   const handleRoleChange = async (userId: string, newRole: 'admin' | 'customer') => {
     try {
