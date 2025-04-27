@@ -19,6 +19,9 @@ import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import AboutPage from './pages/AboutPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
+import ManageBookingsPage from './pages/admin/ManageBookingsPage';
+import ManageVehiclesPage from './pages/admin/ManageVehiclesPage';
+import ManageUsersPage from './pages/admin/ManageUsersPage';
 
 // CSS
 import './App.css';
@@ -107,6 +110,30 @@ const App: React.FC = () => {
                   element={
                     <PrivateRoute requireAdmin>
                       <AdminDashboardPage />
+                    </PrivateRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/bookings" 
+                  element={
+                    <PrivateRoute requireAdmin>
+                      <ManageBookingsPage />
+                    </PrivateRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/vehicles" 
+                  element={
+                    <PrivateRoute requireAdmin>
+                      <ManageVehiclesPage />
+                    </PrivateRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/users" 
+                  element={
+                    <PrivateRoute requireAdmin>
+                      <ManageUsersPage />
                     </PrivateRoute>
                   } 
                 />

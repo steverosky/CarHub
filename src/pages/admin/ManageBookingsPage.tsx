@@ -117,7 +117,7 @@ const ManageBookingsPage: React.FC = () => {
                     {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                   </span>
                 </td>
-                <td className="px-4 py-2">${booking.totalAmount.toFixed(2)}</td>
+                <td className="px-4 py-2">${(booking.totalAmount || 0).toFixed(2)}</td>
                 <td className="px-4 py-2">
                   {booking.status === 'pending' && (
                     <div className="flex space-x-2">
