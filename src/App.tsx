@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './contexts/AuthContext';
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import Layout from './components/layout/Layout';
@@ -60,6 +62,7 @@ const App: React.FC = () => {
                 },
               }}
             />
+            <ToastContainer aria-label="Notifications" />
             <Layout>
               <Routes>
                 {/* Public Routes */}
